@@ -103,7 +103,7 @@ public class Animal {
     return tame_status;
   }
   
-  public String Interact1() {
+  public String Interact() {
     return interaction;
   }
 
