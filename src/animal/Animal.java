@@ -15,7 +15,7 @@ public class Animal {
     this(AnimalOption,10);
   }
   
-  Animal(String AnimalOption,int weight) {
+  public Animal(String AnimalOption,int weight) {
     position = new Location();
     switch(AnimalOption) {
       case "Cat":
