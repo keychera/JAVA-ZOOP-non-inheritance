@@ -180,6 +180,10 @@ public class Tour{
     return route_pointer;
   }
   
+  public Location[] GetRoute() {
+    return route;
+  }
+  
   public void PrintRoute() {
     for(int i = 0;i < route_distance;i++){
       System.out.print(route[i].x);

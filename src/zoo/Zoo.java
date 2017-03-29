@@ -96,28 +96,28 @@ public class Zoo {
               {
                   switch (character) {
                       case 'a':
-                          Cells[j] = new AirHabitat();
+                          Cells[j] = new Cell("AirHabitat");
                           break;
                       case 'w':
-                          Cells[j] = new WaterHabitat();
+                          Cells[j] = new Cell("WaterHabitat");
                           break;
                       case 'l':
-                          Cells[j] = new LandHabitat();
+                          Cells[j] = new Cell("LandHabitat");
                           break;
                       case 'R':
-                          Cells[j] = new Restaurant();
+                          Cells[j] = new Cell("Restaurant");
                           break;
                       case 'P':
-                          Cells[j] = new Park();
+                          Cells[j] = new Cell("Park");
                           break;
                       case 'E':
-                          Cells[j] = new Entrance();
+                          Cells[j] = new Cell("Entrance");
                           break;
                       case '@':
-                          Cells[j] = new Exit();
+                          Cells[j] = new Cell("Exit");
                           break;
                       default:
-                          Cells[j] = new Road();
+                          Cells[j] = new Cell("Road");
                           break;
                   }
                   j++;

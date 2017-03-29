@@ -5,7 +5,7 @@
  */
 package unit_test;
 
-import cell.Park;
+import cell.Cell;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,7 +44,7 @@ public class ParkTest {
     @Test
     public void testRender() {
         System.out.println("Render Park");
-        Park instance = new Park();
+        Cell instance = new Cell("Park");
         System.out.println("expected : P");
         System.out.print("result : ");
         instance.Render();
@@ -57,7 +57,7 @@ public class ParkTest {
     @Test
     public void testGetType() {
         System.out.println("GetType Park");
-        Park instance = new Park();
+        Cell instance = new Cell("Park");
         String expResult = "Park";
         String result = instance.GetType();
         assertEquals(expResult, result);

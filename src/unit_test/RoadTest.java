@@ -5,7 +5,7 @@
  */
 package unit_test;
 
-import cell.Road;
+import cell.Cell;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,7 +44,7 @@ public class RoadTest {
     @Test
     public void testGetType() {
         System.out.println("GetType Road");
-        Road instance = new Road();
+        Cell instance = new Cell("Road");
         String expResult = "Road";
         String result = instance.GetType();
         assertEquals(expResult, result);
@@ -56,7 +56,7 @@ public class RoadTest {
     @Test
     public void testRender() {
         System.out.println("Render Road");
-        Road instance = new Road();
+        Cell instance = new Cell("Road");
         System.out.println("expected :  n");
         System.out.print("result : ");
         instance.Render();

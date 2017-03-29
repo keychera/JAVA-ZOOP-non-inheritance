@@ -10,7 +10,7 @@ import location.*;
  * @version     VZ03
  * 
  */
-public abstract class Cell extends Renderable implements ILocation {
+public class Cell{
     protected int x;
     protected int y;
     private String cellName;
@@ -85,12 +85,16 @@ public abstract class Cell extends Renderable implements ILocation {
      * @return String
      */
 
-    public abstract String GetName();
+    public String GetName(){
+      return cellName;
+    }
     /**
      * pure virtual for type getter
      * @return String
      */
-    public abstract String GetType();
+    public String GetType(){
+      return cellType;
+    }
     	/**
 	   * @brief getter for X value
 	   * @return int
@@ -133,5 +137,9 @@ public abstract class Cell extends Renderable implements ILocation {
     {
         this.x=_x;
         this.y=_y;
+    }
+    
+    public void Render() {
+      System.out.print(render);
     }
 };
