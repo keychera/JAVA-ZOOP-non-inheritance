@@ -13,25 +13,72 @@ import location.*;
 public abstract class Cell extends Renderable implements ILocation {
     protected int x;
     protected int y;
+    private String cellName;
+    private String cellType;
+    private char render;
     /**
      * default constructor
      * construct Renderable and Location
      */
-    public Cell()
+    public Cell(String CellOption)
     {
-        super();
-        x=0;
-        y=0;
+    	this(CellOption, 0, 0);        
     }
     /**
      * constructor with parameter ,construct Cell and set Location(x,y)
      * @param _x 
      * @param _y 
      */
-    public Cell(int _x, int _y)
+    public Cell(String CellOption, int _x, int _y)
     {
        this.x=_x;
        this.y=_y;
+       switch(CellOption) {
+       case "Entrance":
+           cellType = "Entrance";
+           render = 'E';
+           cellName = "Facility";
+           break;
+        case "Exit":
+           cellType = "Exit";
+           render = '@';
+           cellName = "Facility";
+           break;
+        case "Park":
+           cellType = "Park";
+           render = 'p';
+           cellName = "Facility";
+           break;
+        case "Restaurant":
+           cellType = "Restaurant";
+           render = 'R';
+           cellName = "Facility";
+           break;
+        case "Road":
+           cellType = "Road";
+           render = ' ';
+           cellName = "Facility";
+           break;
+        case "AirHabitat":
+           render = '*';
+           cellType = "AirHabitat";
+           cellName = "Habitat";
+           break;
+        case "LandHabitat":
+           render = '^';
+           cellType = "LandHabitat";
+           cellName = "Habitat";
+           break;
+        case "WaterHabitat":
+           render = '~';
+           cellType = "WaterHabitat";
+           cellName = "Habitat";
+           break;
+        default:
+            cellType = "???";
+           render = '?';
+           cellName = "???";
+       }
     }
     /**
      * pure virtual for name getter
