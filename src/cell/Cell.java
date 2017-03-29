@@ -22,8 +22,7 @@ public abstract class Cell extends Renderable implements ILocation {
      */
     public Cell(String CellOption)
     {
-        super();
-        this(CellOption, 0, 0);
+    	this(CellOption, 0, 0);        
     }
     /**
      * constructor with parameter ,construct Cell and set Location(x,y)
