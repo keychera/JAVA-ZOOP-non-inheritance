@@ -1,4 +1,4 @@
-package zoo;
+
 
 import animal.Animal;
 import cell.*;
@@ -7,10 +7,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.util.Random;
 import location.Location;
+import zoo.Cage;
 
 /**
  * @file	zoo.h
@@ -18,8 +21,8 @@ import location.Location;
  * @since	March 2017
  */
 
-public class Zoo {
-    public static final int DEFSIZE = 16;
+public class Zoo2 {
+    public static final int DEFSIZE = 10;
     private Cell[] Cells;   ///< array of Cell*
     private Cage[] Cages;   ///< array of Cage*
     private int NCages;     ///< number of cage
@@ -29,7 +32,7 @@ public class Zoo {
     * default construstor
     * this will set width and legth to DEFSIZE and make new Cells and Cages
     */
-    public Zoo()
+    public Zoo2()
     {
         this.width = DEFSIZE;
         this.length = DEFSIZE;
@@ -43,7 +46,7 @@ public class Zoo {
      * @param w
      * @param l
      */
-    public Zoo(int w, int l)
+    public Zoo2(int w, int l)
     {
         this.width = w;
         this.length = l;
@@ -68,33 +71,35 @@ public class Zoo {
      */
     public void ReadZoo(String filename) throws FileNotFoundException, IOException
     {
+        int panjang;
         int i = 0;
         int j = 0;
         int templength = 0;
-        File f = new File(filename);
-        FileInputStream fis = null;
+        RandomAccessFile raf = new RandomAccessFile("map.txt","r");
+        raf.seek(0);
+        panjang = (int) raf.length();
+        raf.close();
+        Cells = new Cell[panjang];
+        File f = new File("map.txt");
+        BufferedReader reader;
+        reader = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(f),
+                            Charset.forName("UTF-8")));
         try {
             int c;
-            fis = new FileInputStream(f);
-            Cells = new Cell[fis.available()];
-            for(;;){
-              c = fis.read();
-              if(c== -1)
-              {
-                break;
-              }
+            while((c = reader.read()) != -1) {
               char character = (char) c;
-              if(character == '\n')
+              if(c == '\n')
               {
                   i++;
-                  j--;
                   if(i == 1)
                   {
                       templength = j;
                   }
               }else
               {
-                  switch (character) {
+                  switch (c) {
                       case 'a':
                           Cells[j] = new AirHabitat();
                           break;
@@ -123,24 +128,14 @@ public class Zoo {
                   j++;
               }
             }
-        }catch(IOException e)
-        {
-          e.printStackTrace();
         }finally {
-            try{
-              if(fis != null)
-              {
-                  fis.close();
-              }
-            }catch (IOException ex)
+            if(reader != null)
             {
-              ex.printStackTrace();
+                reader.close();
             }
         }
         this.length = templength ;
-        System.out.println(length);
         this.width = i;
-        System.out.println(width);
         for(i = 0; i < j; i++)
         {
             Cells[i].SetXY(i % this.length, i / this.length);
@@ -281,33 +276,18 @@ public class Zoo {
                     checked++;
                 }
                 NCages++;
-                //System.out.println(NCages);
                 //menyimpan cage baru di C
-                Cage C = new Cage(name, i+1);
-                //System.out.println(C.GetSize());
-                for(int ar = 0; ar < (i+1); ar++){
+                Cage C = new Cage(name, i + 1);
+                for(int ar = 0; ar < (i + 1); ar++){
                     Location L = new Location((queue[ar] / length),(queue[ar] % length));
                     C.GetArea()[ar] = L;
-                    //System.out.format("%d,%d\n", C.GetArea()[ar].x,C.GetArea()[ar].y);
                 }
-                //this.Cages[this.NCages-1]=C;
-                
                 //membuat array temp untuk menyimpan cage lama
                 Cage[] temp = new Cage[NCages];
-                int p;
-                for( p = 0; p < (NCages - 1); p++)
-                {
-                  temp[p] = this.Cages[p].CopyCage();
-                }
-                temp[p] = C;
-                //System.arraycopy(Cages, 0, temp, 0, NCages - 1); 
+                System.arraycopy(Cages, 0, temp, 0, NCages - 1); 
                 //menginisialisasi ukuran baru dan memaskkan temp ke cages
-                this.Cages = new Cage[this.NCages];
-                for(i = 0; i < this.NCages; i++)
-                {
-                  this.Cages[i] = temp[i].CopyCage();
-                }
-                //System.arraycopy(temp, 0, Cages, 0, NCages);
+                Cages = new Cage[NCages];
+                System.arraycopy(temp, 0, Cages, 0, NCages);
             }
             check[count] = true;
             count++;
@@ -321,22 +301,20 @@ public class Zoo {
      */
     public void ReadAnimal(String filename) throws IOException
     {
-        File f = new File(filename);
+        File f = new File("animal.txt");
         BufferedReader reader;
         reader = new BufferedReader(
                     new InputStreamReader(
                         new FileInputStream(f),
                         Charset.forName("UTF-8")));
-      	char hewan;
-      	int n_hewan;
-        String str;
-          while((str = reader.readLine()) != null && (str.length() != 0)) {
-            hewan = str.charAt(0);
-            n_hewan = ((int) str.charAt(1) - 48);
+	char hewan;
+	int n_hewan;
+          do {
+            hewan = reader.readLine().charAt(0);
+            n_hewan = ((int) reader.readLine().charAt(1) - 48);
             Animal A;
             for(int i = 1; i <= n_hewan; i++)
             {
-                System.out.println(hewan);
                 if(hewan == 'c')
                 {
                   A = new Animal("Cat");
@@ -409,7 +387,7 @@ public class Zoo {
                 }
                 AddAnimaltoZoo(A);
           }
-        }
+        }while (reader!=null);
       reader.close();
     }
     public void AddAnimaltoZoo(Animal A)
@@ -528,23 +506,23 @@ public class Zoo {
                     {
                       iAn = k;
                     }
-                  }
+                }
                 //cout<<"ada animal"<<endl;
-                }
-                //cout<<"done";
-                if(iAn != (-1))//ada animal
-                {
-                  Cages[indeks].GetAnimals()[iAn].Render();
-                }else
-                {
-                  Cells[i * length + j].Render();
-                }
+              }
+              //cout<<"done";
+              if(iAn != (-1))//ada animal
+              {
+                Cages[indeks].GetAnimals()[iAn].Render();
               }else
               {
-                //cout<<"non";
                 Cells[i * length + j].Render();
               }
-              System.out.print(' ');
+            }else
+            {
+              //cout<<"non";
+              Cells[i * length + j].Render();
+            }
+            System.out.print(' ');
           }
           System.out.print('\n');
         }

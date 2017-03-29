@@ -6,8 +6,8 @@ import java.util.Random;
 
 /**
  * class Cage contains animals and locations to form cage for zoo
- * @author	Harum Lokawati
- * @since	March 2017
+ * @author	    Harum Lokawati
+ * @since	      March 2017
  * @version     VZ03
  * 	
  */
@@ -29,6 +29,20 @@ public class Cage{
         this.NAnimal=0;
         this.area= new Location[0];
         this.Animals=new Animal[0];
+    }
+    public Cage CopyCage()
+    {
+      Cage copy = new Cage(this.GetHabitat(),this.GetSize());
+      copy.NAnimal = this.NAnimal;
+      for(int i = 0;i< copy.size; i++)
+      {
+        copy.area[i] = this.area[i];
+      }
+      for(int i = 0;i< copy.NAnimal; i++)
+      {
+        copy.Animals[i]=this.Animals[i];
+      }
+      return copy;
     }
     /**
      * construstor with parameter, this will set NAnimal to 0, size to _size, habitat to hab, Animals and area
@@ -164,7 +178,7 @@ public class Cage{
                 int j = 0;
                 while( ok && (j < this.NAnimal))
                 {
-                    if(this.Animals[j].GetSpecies().equals(A.GetSpecies()))
+                    if(!this.Animals[j].GetSpecies().equals(A.GetSpecies()))
                     {
                         ok = false;
                     }

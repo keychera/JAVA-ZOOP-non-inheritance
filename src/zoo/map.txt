@@ -1,0 +1,21 @@
+lllllllllllEEwwwwwww
+@        ll       ll
+lllllll  ll  lll  ll
+ll   ll  ll  lll  ll
+ll       ll       aa
+ll  lllllll  ll  aaa
+aa  aaaaaaa  ll  aaa
+aa  aa   aa       aa
+aa       aa  lllaaaa
+RRR  aa  aa  llllwww
+RRR  aa  aaa      ww
+PP   aa  aalllll  ww
+PP   aa  aalllll  ww
+PP   aa  aaa     lll
+wwww     aaa  P  lll
+wwww  wwwwww  P  lll
+wwww  wwwwww  RR lll
+wwww  wwww    RR lll
+wwww  www  ww    lll
+wwww       www   lll
+wwwwwwwwwwwwwwwwwwww
